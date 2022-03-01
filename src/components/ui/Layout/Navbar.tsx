@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-// import { AuthContext } from "../../../context/AuthContext";
-// import useLogout from "../../../shared/hooks/firebaseHooks/useLogout";
-// import Button from "../Button/Button";
+import { AuthContext } from "../../../context/AuthContext";
+import useLogout from "../../../shared/hooks/firebaseHooks/useLogout";
+import Button from "../Button/Button";
 
 const Navbar = () => {
-  // const { logout } = useLogout();
-  // const { user } = useContext<string | any>(AuthContext);
+  const { logout } = useLogout();
+  const { user } = useContext<string | any>(AuthContext);
   return (
     <div className="bg-[#4E95C3] h-[134px]">
       <nav>
@@ -19,7 +19,7 @@ const Navbar = () => {
             </Link>
           </li>
 
-          {/* {!user ? (
+          {!user ? (
             <div className="flex pr-[100px] space-x-6 items-center">
               <li>
                 <Link to={"/login"}>
@@ -51,7 +51,7 @@ const Navbar = () => {
                 </Link>
               </li>
             </div>
-          )} */}
+          )}
         </ul>
       </nav>
     </div>
