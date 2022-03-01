@@ -1,12 +1,12 @@
 import BgImageHomepage from "../../assets/bg-image-homepage.svg";
-// import Button from "../../components/ui/Button/Button";
 import PlanIcon from "../../assets/plan-icon.svg";
 import MoneyIcon from "../../assets/money-icon.svg";
 import { useNavigate } from "react-router-dom";
-// import ThumbsUpIcon from "../../shared/icons/ThumbsUpIcon";
+import Button from "../../components/ui/Button/Button";
+import ThumbsUpIcon from "../../assets/icons/ThumbsUpIcon";
 
 const Home = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <>
       <div className="h-[720px] relative overflow-hidden w-full">
@@ -23,15 +23,15 @@ const Home = () => {
             click...
           </p>
           <div className="pt-[130px] pb-[187px] pl-[850px] pr-[489px]">
-            {/* <Button
+            <Button
               bgColor="bg-[#DB0505]"
               textColor="text-white"
               borderColor="border-[#DB0505]"
-              textSize="text-[36px]" 
-              onClick={()=> history.push('/accommodation?get_started=true')}
+              textSize="text-[36px]"
+              onClick={() => navigate("/accommodation?get_started=true")}
             >
               Get Started
-            </Button> */}
+            </Button>
           </div>
         </div>
       </div>
@@ -42,7 +42,7 @@ const Home = () => {
         </div>
         <div className="flex flex-col items-center space-y-[50px]">
           <p>Recommending the best places for you</p>
-          {/* <ThumbsUpIcon className="w-[110px] h-[116px]"/> */}
+          <ThumbsUpIcon className="w-[110px] h-[116px]" />
         </div>
         <div className="flex flex-col items-center space-y-[50px]">
           <p>Make the best choice for your budget</p>
