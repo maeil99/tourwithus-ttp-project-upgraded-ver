@@ -29,8 +29,8 @@ function App() {
                 path={"/login"}
                 element={!user ? <Login /> : <Navigate to={"/"} />}
               />
+              {/* --Accommodation page-- */}
               <Route path={"/accommodation"} element={<Accommodation />} />
-
               <Route
                 path={"/accommodation/:place"}
                 element={<AccommodationList />}

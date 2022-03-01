@@ -4,6 +4,7 @@ import MoneyIcon from "../../assets/money-icon.svg";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button/Button";
 import ThumbsUpIcon from "../../assets/icons/ThumbsUpIcon";
+import AccoMainPage from "./AccoMainPage";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -48,6 +49,9 @@ const Home = () => {
           <p>Make the best choice for your budget</p>
           <img src={MoneyIcon} alt="" className="w-[110px] h-[116px]" />
         </div>
+      </div>
+      <div className="grid grid-flow-row">
+        <AccoMainPage />
       </div>
     </>
   );
