@@ -19,6 +19,8 @@ export interface IAttractionProps {
   souvenirShops: boolean;
   //type of attraction, eg.
   type: AttracType;
+  //rating from provider , scale is 1 to 5
+  rating: number;
 }
 
 enum AttracType {

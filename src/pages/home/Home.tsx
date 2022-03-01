@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button/Button";
 import ThumbsUpIcon from "../../assets/icons/ThumbsUpIcon";
 import AccoMainPage from "./AccoMainPage";
+import CovidMainPage from "./CovidMainPage";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -52,6 +53,7 @@ const Home = () => {
       </div>
       <div className="grid grid-flow-row">
         <AccoMainPage />
+        <CovidMainPage />
       </div>
     </>
   );
