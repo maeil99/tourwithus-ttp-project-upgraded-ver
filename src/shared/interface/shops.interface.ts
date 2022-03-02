@@ -1,4 +1,5 @@
 export interface IShopProps {
+  id: string;
   //shop's name, e.g. kedai runcit rahmat
   shopName: string;
   shopAddr: string;

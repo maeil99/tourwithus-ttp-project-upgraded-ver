@@ -1,4 +1,5 @@
 export interface ICabsProps {
+  id: string;
   //vehicle type e.g. van, four-seater, six-seater, etc
   vehicleType: string;
   //name of the company, e.g. grab

@@ -1,4 +1,5 @@
 export interface IFlightProps {
+  id:string;
   //flight's company name
   flightCompany: string;
   //price per ticket

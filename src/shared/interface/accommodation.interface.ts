@@ -1,4 +1,6 @@
 export interface IAccommodationProps {
+  id: string;
+  district: string;
   //hotel name
   accomName: string;
   //price per night

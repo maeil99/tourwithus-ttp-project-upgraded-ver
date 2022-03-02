@@ -1,4 +1,5 @@
 export interface IAttractionProps {
+  id: string;
   //name of the attraction
   attractionName: string;
   //distance must be arrange based on accommodation, eg. if fist accommodation is oyo hotel,
@@ -20,7 +21,7 @@ export interface IAttractionProps {
   //type of attraction, eg.
   type: AttracType;
   //rating from provider , scale is 1 to 5
-  rating: number;
+  rating?: number;
 }
 
 enum AttracType {
