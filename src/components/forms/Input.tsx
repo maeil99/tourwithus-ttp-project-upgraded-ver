@@ -28,7 +28,7 @@ const InputField = ({
   errorMessageClassname,
 }: InputProps) => {
   return (
-    <div className={className ? "" : "flex flex-col w-[443px]"}>
+    <div className={className ? "" : "flex flex-col w-[223px] md:w-[443px]"}>
       <label
         htmlFor={name}
         className={className ? "" : "text-xl md:text-3xl pb-2"}
@@ -44,7 +44,7 @@ const InputField = ({
         className={
           className
             ? className
-            : "h-16 items-center text-2xl px-2 border border-black rounded-lg"
+            : "h-8 md:h-16 items-center text-lg md:text-2xl px-2 border border-black rounded-lg"
         }
       />
       <div className={`text-red-600  ${errorMessageClassname ? errorMessageClassname : 'px-16'}`}>

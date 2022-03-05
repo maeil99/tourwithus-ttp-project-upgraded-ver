@@ -20,7 +20,7 @@ const SelectDate = ({
   onBlur,
 }: ISelectDateProps) => {
   return (
-    <div className={"flex flex-col w-[443px]"}>
+    <div className={"flex flex-col w-[223px] md:w-[443px]"}>
       <label htmlFor={name} className={"text-xl md:text-3xl pb-2"}>
         {label}
       </label>
@@ -31,7 +31,7 @@ const SelectDate = ({
         onBlur={onBlur}
         minDate={minDate}
         className={
-          "h-16 items-center text-2xl px-2 border border-black rounded-lg"
+          "h-8 md:h-16 items-center text-lg md:text-2xl px-2 border border-black rounded-lg"
         }
       />
     </div>
