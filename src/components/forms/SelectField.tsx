@@ -23,26 +23,26 @@ const SelectField = ({
   multiple = false,
 }: ISelectFieldProps) => {
   return (
-    <>
-      <label htmlFor={name}>{label}</label>
+    <div className="flex flex-col w-[443px]">
+      <label htmlFor={name} className='text-xl md:text-3xl pb-2'>{label}</label>
       <Field
         as="select"
         name={name}
         id={name}
-        className={`registerField ${className}`}
+        className={` ${className} h-16 items-center text-2xl px-2 border border-black rounded-lg`}
         multiple={multiple}
       >
         {options &&
           options.map((option) => (
-            <option key={option.value} value={option.value}>
+            <option key={option.value} value={option.value} className='text-2xl'>
               {option.key}
             </option>
           ))}
       </Field>
-      <div className={`text-red-600 px-16 ${errorMessageClassname}`}>
+      <div className={`text-red-600 ${errorMessageClassname} flex px-3`}>
         <ErrorMessage name={name} />
       </div>
-    </>
+    </div>
   );
 };
 
