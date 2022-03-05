@@ -14,11 +14,14 @@ export interface ICabsProps {
   pricePerTrip: number;
   //duration of the trip
   tripDuration: number;
-  //total distance from pickup location, in meter
-  totalDistance?: number[];
   //distance must be arrange based on accommodation, eg. if fist accommodation is oyo hotel,
   // then the first array is must the distance from oyo hotel to the destination
-  totalDistanceFromAccom?: number[];
+  totalDistanceFromAttraction?: number[];
+  //distance must be arrange based on accommodation, eg. if fist accommodation is oyo hotel,
+  // then the first array is must the distance from oyo hotel to the destination
+  totalDistanceFromShops?: number[];
+  //total distance from both attraction and shops
+  totalDistance?: number[];
   //website that offer the deal, e.g. booking.com
   cabsProvider: string;
 }

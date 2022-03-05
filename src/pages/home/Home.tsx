@@ -1,4 +1,3 @@
-import BgImageHomepage from "../../assets/bg-image-homepage.svg";
 import PlanIcon from "../../assets/plan-icon.svg";
 import MoneyIcon from "../../assets/money-icon.svg";
 import { useNavigate } from "react-router-dom";
@@ -11,20 +10,15 @@ const Home = () => {
   const navigate = useNavigate();
   return (
     <>
-      <div className="h-[720px] relative overflow-hidden w-full">
-        <img
-          src={BgImageHomepage}
-          alt=""
-          className=" object-fill w-full h-[720px]"
-        />
-        <div className="absolute top-0 left-0 px-6 py-4">
-          <p className="pt-[103px] text-[#4E95C3] text-[64px] pl-[430px]">
+      <div className="h-[720px]">
+        <div>
+          <p className="pt-[103px] text-[#4E95C3] text-[64px] flex justify-center">
             Every journey starts with a single
           </p>
-          <p className=" text-[#4E95C3] text-[64px] text-left  pl-[530px]">
+          <p className=" text-[#4E95C3] text-[64px] flex  pl-[600px]">
             click...
           </p>
-          <div className="pt-[130px] pb-[187px] pl-[850px] pr-[489px]">
+          <div className="flex justify-center pt-[130px]">
             <Button
               bgColor="bg-[#DB0505]"
               textColor="text-white"

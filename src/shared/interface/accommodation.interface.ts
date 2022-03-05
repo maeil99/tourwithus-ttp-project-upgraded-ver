@@ -8,7 +8,7 @@ export interface IAccommodationProps {
   //hotel address
   address: string;
   //provider of the deal, eg. booking.com
-  AccomProvider: string;
+  accomProvider: string;
   //accommodation type, eg. hostel
   type: AccomType;
   //room packages, eg. single bed room
@@ -19,6 +19,7 @@ export interface IAccommodationProps {
   peoplePerRoom: number;
   //based on the provider
   rating?: number;
+  link:string;
 }
 
 enum AccomType {
