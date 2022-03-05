@@ -30,7 +30,7 @@ const Card = ({
         </div>
         <div className="flex items-center space-x-2">
           {price && (
-            <h2>{`RM${price.toFixed(2)} per ${
+            <h2>{`RM${price} per ${
               cardType === "accommodation"
                 ? "night"
                 : cardType === "attraction"

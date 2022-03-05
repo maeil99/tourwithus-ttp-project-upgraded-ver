@@ -6,6 +6,8 @@ import ClockIcon from "../../assets/icons/ClockIcon";
 import Button from "../../components/ui/Button/Button";
 import Card from "../../components/ui/Card/Card";
 import Container from "../../components/ui/Container";
+import { useCollection } from "../../shared/hooks/firebaseHooks/useCollection";
+import { IAccommodationProps } from "../../shared/interface/accommodation.interface";
 import { ICovidCasesMalaysia } from "../../shared/interface/covid.interface";
 
 export const AccommodationList = () => {
@@ -22,7 +24,7 @@ export const AccommodationList = () => {
     "https://disease.sh/v3/covid-19/countries/Malaysia?yesterday=true&strict=true";
   const [covidCases, setCovidCases] = useState<ICovidCasesMalaysia>();
   const navigate = useNavigate();
-  const getCovidCasesPerak = async () => {
+  const getCovidCasesMalaysia = async () => {
     const res = await axios.get(malaysiaCovidURL);
 
     const data = res.data;
@@ -30,13 +32,26 @@ export const AccommodationList = () => {
   };
 
   const navigateToPage = (pageLink: string) => {
-    navigate(pageLink);
+    window.location.href = pageLink;
   };
   const [dateState, setDateState] = useState(new Date());
   useEffect(() => {
     setInterval(() => setDateState(new Date()), 30000);
-    getCovidCasesPerak();
+    getCovidCasesMalaysia();
   }, []);
+  const destination: string = place ? place.replace(/[ _\\/]/g, " ") : "";
+
+  const [accomList, setAccomList] = useState<IAccommodationProps[]>();
+  const { documents, error } = useCollection("accommodation", [
+    "district",
+    "==",
+    `${destination}`,
+  ]);
+  useEffect(() => {
+    if (documents !== undefined && documents !== null) {
+      setAccomList(documents);
+    }
+  }, [documents]);
 
   return (
     <Container className="xl:px-0">
@@ -65,7 +80,6 @@ export const AccommodationList = () => {
               </p>
             </div>
           </div>
-
           <div className="flex">
             <p>Location: Malaysia</p>
           </div>
@@ -75,22 +89,36 @@ export const AccommodationList = () => {
             </div>
           )}
         </div>
-
-        <Card
-          header="Oyo Hotel"
-          cardType="accommodation"
-          onClick={() => navigateToPage("/")}
-          price={5}
-        >
-          <p>hai</p>
-        </Card>
+        {accomList &&
+          accomList.map((accom) => (
+            <Card
+              key={accom.id}
+              header={accom.accomName}
+              cardType="accommodation"
+              onClick={() => navigateToPage(`${accom.link}`)}
+              price={accom.pricePerNight}
+            >
+              {accom.amenities && (
+                <div>
+                  <p className="font-bold">Amenities</p>
+                  <ul>
+                    {accom.amenities.map((accom, index) => (
+                      <li key={index}>{accom}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <p>{accom.peoplePerRoom} person per room</p>
+            </Card>
+          ))}
+        {error && <p className="text-red-500">{error}</p>}
         {query === "true" ? (
           <div className=" flex justify-end space-x-4">
-            <Button>Next</Button>
+            <Button>Book a flight</Button>
             <Button>Finish</Button>
           </div>
         ) : (
-          <Button onClick={()=> navigateToPage('/')}>Back to Homepage</Button>
+          <Button onClick={() => navigate("/")}>Back to Homepage</Button>
         )}
       </div>
     </Container>
