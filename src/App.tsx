@@ -5,6 +5,7 @@ import Layout from "./components/ui/Layout/Layout";
 import { AuthContext } from "./context/AuthContext";
 import Accommodation from "./pages/accomodation/Accommodation";
 import { AccommodationList } from "./pages/accomodation/AccommodationList";
+import Flight from "./pages/flight/Flight";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
@@ -35,6 +36,8 @@ function App() {
                 path={"/accommodation/:place"}
                 element={<AccommodationList />}
               />
+              {/* --Flight page-- */}
+              <Route path={"/flight"} element={<Flight />} />
               {/* 404 pages */}
               <Route path={"*"} element={<NotFoundPage />} />
             </Routes>
