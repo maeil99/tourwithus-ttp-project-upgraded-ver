@@ -47,7 +47,7 @@ const InputField = ({
             : "h-16 items-center text-2xl px-2 border border-black rounded-lg"
         }
       />
-      <div className={`text-red-600 px-16 ${errorMessageClassname}`}>
+      <div className={`text-red-600  ${errorMessageClassname ? errorMessageClassname : 'px-16'}`}>
         <ErrorMessage name={name} />
       </div>
     </div>
