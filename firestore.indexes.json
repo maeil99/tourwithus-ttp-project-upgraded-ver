@@ -1,0 +1,19 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "accommodation",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "district",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "peoplePerRoom",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
