@@ -41,8 +41,9 @@ export interface IFlightProps {
   placesOfTransit?: string[];
 }
 
-enum CabinClass {
+export enum CabinClass {
   ECONOMY = "economy",
+  PREMIUM_ECONOMY = "premium economy",
   BUSINESS = "business",
   BUSINESS_SUITE = "business-suite",
 }
