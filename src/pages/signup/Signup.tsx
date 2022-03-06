@@ -34,46 +34,38 @@ const Singup = () => {
       <h1 className="text-center font-bold uppercase py-4">
         Registration Form
       </h1>
-      <div className="flex justify-center pb-24">
+      <div className="flex flex-row justify-center pb-24">
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
           validationSchema={validationShema}
         >
-          <Form className="border p-16 rounded-lg shadow-lg">
-            <div className="space-x-20 py-4">
-              <InputField
-                type={InputType.TEXT}
-                name="displayName"
-                label="Username"
-                className={inputCSS}
-              />
-            </div>
-            <div className="space-x-28 py-4">
-              <InputField
-                type={InputType.EMAIL}
-                name="email"
-                label="Email"
-                className={inputCSS}
-              />
-            </div>
-            <div className="space-x-20 py-4">
-              <InputField
-                type={InputType.PASSWORD}
-                name="password"
-                label="Password"
-                className={inputCSS}
-              />
-            </div>
-            <div className="space-x-7 py-4">
-              <InputField
-                type={InputType.PASSWORD}
-                name="confirmPassword"
-                label="Confirm Password"
-                className={inputCSS}
-                errorMessageClassname="px-36"
-              />
-            </div>
+          <Form className="border p-16 rounded-lg shadow-lg space-y-5">
+            <InputField
+              type={InputType.TEXT}
+              name="displayName"
+              label="Username"
+              className={inputCSS}
+            />
+            <InputField
+              type={InputType.EMAIL}
+              name="email"
+              label="Email"
+              className={inputCSS}
+            />
+            <InputField
+              type={InputType.PASSWORD}
+              name="password"
+              label="Password"
+              className={inputCSS}
+            />
+            <InputField
+              type={InputType.PASSWORD}
+              name="confirmPassword"
+              label="Confirm Password"
+              className={inputCSS}
+            />
+
             <div className="space-x-4 justify-center px-40 pt-8">
               {isPending ? (
                 <Button disabled>Loading</Button>

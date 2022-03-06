@@ -28,27 +28,39 @@ const InputField = ({
   errorMessageClassname,
 }: InputProps) => {
   return (
-    <div className={className ? "" : "flex flex-col w-[223px] md:w-[443px]"}>
+    <div
+      className={
+        className
+          ? "grid grid-cols-2  space-x-3 justify-start"
+          : "flex flex-col w-[223px] md:w-[443px]"
+      }
+    >
       <label
         htmlFor={name}
-        className={className ? "" : "text-xl md:text-3xl pb-2"}
+        className={className ? "flex" : "text-xl md:text-3xl pb-2"}
       >
         {label}
       </label>
-      <Field
-        as={as}
-        type={type}
-        id={name}
-        name={name}
-        placeholder={placeholder}
-        className={
-          className
-            ? className
-            : "h-8 md:h-16 items-center text-lg md:text-2xl px-2 border border-black rounded-lg"
-        }
-      />
-      <div className={`text-red-600  ${errorMessageClassname ? errorMessageClassname : 'px-16'}`}>
-        <ErrorMessage name={name} />
+      <div>
+        <Field
+          as={as}
+          type={type}
+          id={name}
+          name={name}
+          placeholder={placeholder}
+          className={
+            className
+              ? className
+              : "h-8 md:h-16 items-center text-lg md:text-2xl px-2 border border-black rounded-lg"
+          }
+        />
+        <div
+          className={`text-red-600  ${
+            errorMessageClassname ? errorMessageClassname : "px-16"
+          }`}
+        >
+          <ErrorMessage name={name} />
+        </div>
       </div>
     </div>
   );
