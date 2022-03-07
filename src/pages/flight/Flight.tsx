@@ -75,8 +75,8 @@ const Flight = () => {
   const originLocation = [
     { key: "Where is your origin location", value: "" },
     {
-      key: "Myanmar Airways International",
-      value: "myanmar_airways_international",
+      key: "Bangkok, Thailand",
+      value: "bangkok_thailand",
     },
     { key: "Yangon, Myanmar", value: "yangon_myanmar" },
   ];
@@ -156,9 +156,12 @@ export default Flight;
 
 const formatDate = (currentDate: Date) => {
   const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
-  const day = currentDate.getDate();
+  const rawMonth = currentDate.getMonth();
+  const rawDay = currentDate.getDate();
 
-  const newDate = day + "-" + month + "-" + year;
+  const month = rawMonth < 10 ? "0" + rawMonth : rawMonth;
+  const day = rawDay < 10 ? "0" + rawDay : rawDay;
+
+  const newDate = year + "-" + month + "-" + day;
   return newDate;
 };

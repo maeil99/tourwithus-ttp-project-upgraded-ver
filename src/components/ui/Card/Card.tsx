@@ -5,7 +5,9 @@ type ICardProps = {
   get_started?: boolean;
   radioId?: string;
   name: string;
-  header: string;
+  flightCompanyOne?: string;
+  flightCompanyTwo?: string;
+  header?: string;
   className?: string;
   children?: React.ReactNode;
   price?: number;
@@ -16,10 +18,12 @@ type ICardProps = {
 
 const Card = ({
   name,
+  flightCompanyOne,
+  flightCompanyTwo,
   className = "",
   children,
   onClick,
-  header,
+  header = "",
   price,
   cardType,
   radioId,
@@ -36,7 +40,20 @@ const Card = ({
           {get_started === true && (
             <input type="radio" value={radioId} name={name} />
           )}
-          <h2 className={`font-medium text-lg md:text-xl`}>{header}</h2>
+          {cardType === "flight" ? (
+            <div className="flex flex-col justify-start">
+              <div className="flex space-x-2 text-lg ">
+                <h2>Departure Flight: </h2>
+                <h2 className="font-semibold">{flightCompanyOne}</h2>
+              </div>
+              <div className="flex space-x-2 text-lg">
+                <h2>Return Flight: </h2>
+                <h2 className="font-semibold">{flightCompanyTwo}</h2>
+              </div>
+            </div>
+          ) : (
+            <h2 className={`font-medium text-lg md:text-xl`}>{header}</h2>
+          )}
         </div>
 
         <div className="flex items-center space-x-2">
@@ -57,6 +74,7 @@ const Card = ({
           >
             View Deals
           </button>
+          
           <div onClick={() => setToggleCard(!toggleCard)}>
             <MiniChevronDownIcon
               className={`text-gray-400 w-6 h-6 transform transition duration-200 ${
