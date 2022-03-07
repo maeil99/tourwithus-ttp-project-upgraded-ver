@@ -24,7 +24,7 @@ const SelectField = ({
 }: ISelectFieldProps) => {
   return (
     <div className="flex flex-col w-[223px] md:w-[443px]">
-      <label htmlFor={name} className="text-xl md:text-3xl pb-2">
+      <label htmlFor={name} className="text-xl md:text-3xl pb-2 text-white">
         {label}
       </label>
       <Field

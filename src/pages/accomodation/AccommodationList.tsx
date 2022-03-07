@@ -167,15 +167,26 @@ export const AccommodationList = () => {
         {query === "true" &&
         filteredAccomList &&
         filteredAccomList.length > 0 ? (
-          <div className=" flex justify-end space-x-4">
-            <Button
-              onClick={() =>
-                navigate(`/flight?get_started=true&accom_id=${getAccomId}`)
-              }
-            >
-              Book a flight
-            </Button>
-            <Button>Finish</Button>
+          <div>
+            <div className=" flex justify-end space-x-4">
+              <div>
+                <Button
+                  onClick={() =>
+                    navigate(`/flight?get_started=true&accom_id=${getAccomId}`)
+                  }
+                  disabled={getAccomId ? false : true}
+                >
+                  Book a flight
+                </Button>
+              </div>
+
+              <Button>Finish</Button>
+            </div>
+            {getAccomId === undefined && (
+              <p className="flex justify-end pr-[105px] py-1 text-gray-500">
+                No hotel selected
+              </p>
+            )}
           </div>
         ) : filteredAccomList?.length === undefined ||
           filteredAccomList.length === 0 ? (

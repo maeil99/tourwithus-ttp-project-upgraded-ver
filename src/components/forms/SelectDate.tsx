@@ -20,8 +20,8 @@ const SelectDate = ({
   onBlur,
 }: ISelectDateProps) => {
   return (
-    <div className={"flex flex-col w-[223px] md:w-[443px]"}>
-      <label htmlFor={name} className={"text-xl md:text-3xl pb-2"}>
+    <div className={"flex flex-col"}>
+      <label htmlFor={name} className={"text-white text-xl md:text-3xl pb-2"}>
         {label}
       </label>
       <ReactDatePicker

@@ -6,9 +6,9 @@ export interface IFlightProps {
   //flight's company name
   flightCompanyOneReturn?: string;
   //price per ticket
-  pricePerOneWayTicket: string;
+  pricePerOneWayTicket: number;
   //price per ticket
-  priceForTwoWayTicket: string;
+  priceForTwoWayTicket: number;
   //type of flight
   flightType: "one-way" | "two-way";
   //type of boarding
@@ -16,13 +16,13 @@ export interface IFlightProps {
   //hours taken for the flight, in minutes , for example 1hour 30 minutes = 90 minutes
   flightDuration: number;
   //what time does the flight start from origin,
-  departureTimeFromOrigin: number;
+  departureTimeFromOrigin: Date;
   //what time does the flight arrived at destination
-  arrivalTimeFromOrigin: number;
+  arrivalTimeFromOrigin: Date;
   //what time does the flight start,
-  departureTimeFromDestination?: number;
+  departureTimeFromDestination?: Date;
   //what time does the flight arrived at destination
-  arrivalTimeFromDestination?: number;
+  arrivalTimeFromDestination?: Date;
   //provider for the deal
   flightProvider: string;
   //origin departure
@@ -41,8 +41,9 @@ export interface IFlightProps {
   placesOfTransit?: string[];
 }
 
-enum CabinClass {
+export enum CabinClass {
   ECONOMY = "economy",
+  PREMIUM_ECONOMY = "premium economy",
   BUSINESS = "business",
   BUSINESS_SUITE = "business-suite",
 }
