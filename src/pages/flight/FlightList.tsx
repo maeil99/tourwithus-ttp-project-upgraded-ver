@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/ui/Button/Button";
 import Card from "../../components/ui/Card/Card";
 import Container from "../../components/ui/Container";
+import { AuthContext } from "../../context/AuthContext";
 import { useCollection } from "../../shared/hooks/firebaseHooks/useCollection";
 import { IFlightProps } from "../../shared/interface/flight.interface";
 import { originLocationFormat, convertTime } from "./flight.helper";
 
 const FlightList = () => {
+  //get user (if logged in)
+  const { user } = useContext<string | any>(AuthContext);
   //get all params in the url
   const [searchParams] = useSearchParams();
   const query = searchParams.get("get_started");
@@ -74,10 +77,17 @@ const FlightList = () => {
           Back to search
         </Button>
       </div>
+      {user && (
+        <div className="flex justify-center border-2 border-blue-300">
+          <p className="text-xl py-3">
+            Use gift code <strong>TWUFLI</strong> to get 10% of at the checkout
+          </p>
+        </div>
+      )}
       {filteredFlightList && filteredFlightList.length === 0 ? (
-        <div>No data found</div>
+        <div className="py-2">No data found</div>
       ) : (
-        <div className=" flex flex-col space-y-4">
+        <div className=" flex flex-col space-y-4 py-2">
           {filteredFlightList?.map((flight) => {
             return (
               <Card
@@ -100,11 +110,11 @@ const FlightList = () => {
                 }
                 onChange={(e) => setGetFlightId(e.target.value)}
               >
-                <div className="grid grid-cols-3 py-2">
+                <div className="grid grid-cols-3 py-2 pl-8">
                   <p className="flex justify-start">
                     Origin Location: {flight.originDepartureLocation}
                   </p>
-                  <p className="flex justify-start">
+                  <p className="flex justify-center">
                     Destination Location:{" "}
                     {flight.flightDestinationLocation || "NA"}
                   </p>
@@ -116,7 +126,7 @@ const FlightList = () => {
                   </p>
                 </div>
                 <div className="grid grid-cols-3 py-2">
-                  <p className="flex justify-center">
+                  <p className="flex justify-start pl-8">
                     Flight Type:{" "}
                     {flight.flightType === "one-way" ? "One way" : "Two way"}
                   </p>
@@ -125,7 +135,7 @@ const FlightList = () => {
                       ? flight.numberOfTransit + " transit"
                       : "No Transit"}
                   </p>
-                  <p className="flex justify-center">
+                  <p className="flex justify-end pr-16">
                     Flight Provider: {flight.flightProvider}
                   </p>
                 </div>
@@ -136,7 +146,7 @@ const FlightList = () => {
                       Departure time:{" "}
                       {convertTime(flight.departureTimeFromOrigin)}
                     </p>
-                    <p className="flex justify-center pl-16">
+                    <p className="flex justify-end pr-24">
                       Arrival time: {convertTime(flight.arrivalTimeFromOrigin)}
                     </p>
                   </div>
@@ -150,7 +160,7 @@ const FlightList = () => {
                         {flight.departureTimeFromDestination &&
                           convertTime(flight.departureTimeFromDestination)}
                       </p>
-                      <p className="flex justify-center pl-16">
+                      <p className="flex justify-end pr-24">
                         Arrival time:{" "}
                         {flight.arrivalTimeFromDestination &&
                           convertTime(flight.arrivalTimeFromDestination)}

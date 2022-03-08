@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Button from "../../components/ui/Button/Button";
 import Card from "../../components/ui/Card/Card";
 import Container from "../../components/ui/Container";
+import { AuthContext } from "../../context/AuthContext";
+import capitalizeFirstLetter from "../../shared/helper/capitalizeFirstLetter";
 import { useCollection } from "../../shared/hooks/firebaseHooks/useCollection";
 import { IAttractionProps } from "../../shared/interface/attraction.interface";
 
 const AttractionList = () => {
+  //get user (if logged in)
+  const { user } = useContext<string | any>(AuthContext);
   //to get tourist destination
   const { place } = useParams();
   const [searchParams] = useSearchParams();
@@ -78,15 +82,22 @@ const AttractionList = () => {
           Back to search
         </Button>
       </div>
+      {user && (
+        <div className="flex justify-center border-2 border-blue-300">
+          <p className="text-xl py-3">
+            Use gift code <strong>TWUATT</strong> to get 10% of at the checkout
+          </p>
+        </div>
+      )}
       {filteredAttractList && filteredAttractList.length === 0 ? (
-        <div>No data found</div>
+        <div className="py-2">No data found</div>
       ) : (
-        <div className=" flex flex-col space-y-4">
+        <div className=" flex flex-col space-y-4 py-2">
           {filteredAttractList?.map((attraction) => {
             return (
               <Card
                 get_started={query ? true : false}
-                header={attraction.attractionName}
+                header={capitalizeFirstLetter(attraction.attractionName)}
                 name="attractionRadioId"
                 radioId={attraction.id}
                 key={attraction.id}

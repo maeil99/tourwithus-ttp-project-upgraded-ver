@@ -19,3 +19,15 @@ export const convertTime = (time: Date) => {
 
   return formattedTime;
 };
+
+export const formatDate = (currentDate: Date) => {
+  const year = currentDate.getFullYear();
+  const rawMonth = currentDate.getMonth();
+  const rawDay = currentDate.getDate();
+
+  const month = rawMonth < 10 ? "0" + rawMonth : rawMonth;
+  const day = rawDay < 10 ? "0" + rawDay : rawDay;
+
+  const newDate = year + "-" + month + "-" + day;
+  return newDate;
+};

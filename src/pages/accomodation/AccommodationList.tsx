@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import CalendarIcon from "../../assets/icons/CalendarIcon";
 import ClockIcon from "../../assets/icons/ClockIcon";
@@ -11,8 +11,11 @@ import { IAccommodationProps } from "../../shared/interface/accommodation.interf
 import { ICovidCasesMalaysia } from "../../shared/interface/covid.interface";
 import standardSingleRoom from "../../assets/standard single room.jpg";
 import DeluxeDoubleRoom from "../../assets/deluxe double room.jpg";
+import { AuthContext } from "../../context/AuthContext";
 
 export const AccommodationList = () => {
+  //get user (if logged in)
+  const { user } = useContext<string | any>(AuthContext);
   //to get tourist destination
   const { place } = useParams();
   const [searchParams] = useSearchParams();
@@ -104,7 +107,14 @@ export const AccommodationList = () => {
             </Button>
           </div>
         </div>
-
+        {user && (
+          <div className="flex justify-center border-2 border-blue-300">
+            <p className="text-xl py-3">
+              Use gift code <strong>TWUACCOM</strong> to get 10% of at the
+              checkout
+            </p>
+          </div>
+        )}
         {filteredAccomList &&
           filteredAccomList.map((accom) => (
             <Card

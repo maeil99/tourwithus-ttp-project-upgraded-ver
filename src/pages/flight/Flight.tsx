@@ -6,6 +6,7 @@ import SelectDate from "../../components/forms/SelectDate";
 import SelectField from "../../components/forms/SelectField";
 import Button, { Type } from "../../components/ui/Button/Button";
 import { useState } from "react";
+import { formatDate } from "./flight.helper";
 
 interface IFlightInitialValuesProps {
   from: string;
@@ -153,15 +154,3 @@ const Flight = () => {
 };
 
 export default Flight;
-
-const formatDate = (currentDate: Date) => {
-  const year = currentDate.getFullYear();
-  const rawMonth = currentDate.getMonth();
-  const rawDay = currentDate.getDate();
-
-  const month = rawMonth < 10 ? "0" + rawMonth : rawMonth;
-  const day = rawDay < 10 ? "0" + rawDay : rawDay;
-
-  const newDate = year + "-" + month + "-" + day;
-  return newDate;
-};
