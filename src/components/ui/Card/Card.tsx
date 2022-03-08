@@ -68,13 +68,15 @@ const Card = ({
                 : "trip"
             }`}</h2>
           )}
-          <button
-            className=" px-3 border bg-red-400 text-white font-semibold text-lg shadow-md hover:shadow-xl"
-            onClick={onClick}
-          >
-            View Deals
-          </button>
-          
+          {onClick && (
+            <button
+              className=" px-3 border bg-red-400 text-white font-semibold text-lg shadow-md hover:shadow-xl"
+              onClick={onClick}
+            >
+              View Deals
+            </button>
+          )}
+
           <div onClick={() => setToggleCard(!toggleCard)}>
             <MiniChevronDownIcon
               className={`text-gray-400 w-6 h-6 transform transition duration-200 ${

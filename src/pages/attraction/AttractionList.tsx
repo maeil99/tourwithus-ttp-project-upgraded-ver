@@ -7,6 +7,9 @@ import { AuthContext } from "../../context/AuthContext";
 import capitalizeFirstLetter from "../../shared/helper/capitalizeFirstLetter";
 import { useCollection } from "../../shared/hooks/firebaseHooks/useCollection";
 import { IAttractionProps } from "../../shared/interface/attraction.interface";
+import LostWorld from "../../assets/pic/attraction/lost_world_of_tambun.jpg";
+import HighRope from "../../assets/pic/attraction/high_rope.jpg";
+import FuntasyHouse from "../../assets/pic/attraction/funtasy_house.jpeg";
 
 const AttractionList = () => {
   //get user (if logged in)
@@ -110,7 +113,58 @@ const AttractionList = () => {
                     : 0
                 }
                 onChange={(e) => setGetAttractId(e.target.value)}
-              ></Card>
+              >
+                <div className="py-2 grid grid-cols-2">
+                  <div className="flex justify-center">
+                    <img
+                      src={attractPic(attraction.attractionName)}
+                      alt="gambar hotel"
+                      className="w-56 h-56"
+                    />
+                    <div className="flex flex-col space-y-3 items-center py-8">
+                      <p>Location: {attraction.attractionAddr}</p>
+                      <p>
+                        Person In Charge Contact No. : +60
+                        {attraction.AttractPhoneNo}
+                      </p>
+                      <div className="flex justify-between px-8 space-x-4">
+                        <p>
+                          Opening Hours:{" "}
+                          {attraction.openingHours < 1000
+                            ? "0" + attraction.openingHours
+                            : attraction.openingHours}
+                        </p>
+                        <p>
+                          Closing Hours:{" "}
+                          {attraction.closingHours < 1000
+                            ? "0" + attraction.closingHours
+                            : attraction.closingHours}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="flex justify-start md:justify-end md:pr-40">
+                      Available Attraction:
+                    </p>
+                    {attraction.attractionAvailable.map((attract, index) => (
+                      <ul className="flex justify-start md:pl-[350px]">
+                        <li key={index}>
+                          {index + 1}) {attract}
+                        </li>
+                      </ul>
+                    ))}
+                    <p className="py-2 md:pl-80">
+                      {attraction.souvenirShops === true
+                        ? "The attraction included souvenir shops"
+                        : "No souvenir shops included"}
+                    </p>
+                    <p className="py-2 md:pl-72">
+                      Provider: {attraction.AttractProvider}
+                    </p>
+                  </div>
+                </div>
+              </Card>
             );
           })}
           {query === "true" &&
@@ -155,3 +209,16 @@ const AttractionList = () => {
 };
 
 export default AttractionList;
+
+const attractPic = (loc: string) => {
+  switch (loc) {
+    case "lost world of tambun amusement and water park admission ticket":
+      return LostWorld;
+    case "high rope at mountain school":
+      return HighRope;
+    case "funtasy house trick art admission ticket":
+      return FuntasyHouse;
+    default:
+      break;
+  }
+};
