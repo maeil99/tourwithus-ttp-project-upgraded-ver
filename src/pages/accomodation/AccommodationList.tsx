@@ -65,7 +65,7 @@ export const AccommodationList = () => {
   }, [documents, accomList, peopleQuery]);
 
   return (
-    <Container className="xl:px-0">
+    <Container>
       <div className="space-y-3">
         <div className="flex flex-col ">
           <div className="flex space-x-3">

@@ -5,6 +5,8 @@ import Layout from "./components/ui/Layout/Layout";
 import { AuthContext } from "./context/AuthContext";
 import Accommodation from "./pages/accomodation/Accommodation";
 import { AccommodationList } from "./pages/accomodation/AccommodationList";
+import Attraction from "./pages/attraction/Attraction";
+import AttractionList from "./pages/attraction/AttractionList";
 import Flight from "./pages/flight/Flight";
 import FlightList from "./pages/flight/FlightList";
 import Home from "./pages/home/Home";
@@ -39,7 +41,10 @@ function App() {
               />
               {/* --Flight page-- */}
               <Route path={"/flight"} element={<Flight />} />
-              <Route path={"/flight/flightList"} element={<FlightList/>} />
+              <Route path={"/flight/flightList"} element={<FlightList />} />
+              {/* --attraction page-- */}
+              <Route path={"/attraction"} element={<Attraction />} />
+              <Route path={"/attraction/:place"} element={<AttractionList />} />
               {/* 404 pages */}
               <Route path={"*"} element={<NotFoundPage />} />
             </Routes>

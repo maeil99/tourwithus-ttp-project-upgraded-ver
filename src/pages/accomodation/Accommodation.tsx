@@ -68,7 +68,7 @@ const Accommodation = () => {
 
   return (
     <div className="min-h-[1200px] bg-[#E5E5E5]">
-      <h2 className="text-3xl pt-16">Where do you plan to stay?</h2>
+      <h2 className="text-3xl pt-16 flex md:px-[410px]">Where do you plan to stay?</h2>
       <div className="pt-14 px-[50px] md:px-[118px]">
         <Formik
           initialValues={initialValues}
@@ -78,7 +78,7 @@ const Accommodation = () => {
           {(formik) => (
             <Form>
               <div className="flex justify-center">
-                <div className="flex flex-col md:flex-row md:justify-between bg-[#4E95C3] px-2 py-2 max-h-[450px] md:max-h-[200px] space-x-2 max-w-sm md:max-w-7xl ">
+                <div className="flex flex-col md:flex-row md:justify-between bg-[#4E95C3] px-2 py-2 max-h-[450px] md:max-h-[200px] space-x-2 max-w-lg md:max-w-7xl ">
                   <SelectField
                     label="Staycation"
                     name="destination"

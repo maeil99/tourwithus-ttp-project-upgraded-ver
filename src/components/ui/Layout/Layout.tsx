@@ -8,7 +8,7 @@ interface ILayoutProps {
 
 const Layout = ({ children }: ILayoutProps) => {
   return (
-    <div className="sm:min-w-[640px] md:min-w-[768px] lg:min-w-[1024px]">
+    <div className="sm:max-w-[640px] md:max-w-[1300px] xl:max-w-[1920px] 2xl:max-w-full">
       <Navbar />
       {children}
       <Footer />
