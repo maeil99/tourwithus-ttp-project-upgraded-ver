@@ -43,7 +43,7 @@ export interface IFlightProps {
 
 export enum CabinClass {
   ECONOMY = "economy",
-  PREMIUM_ECONOMY = "premium economy",
+  PREMIUM_ECONOMY = "premium_economy",
   BUSINESS = "business",
-  BUSINESS_SUITE = "business-suite",
+  BUSINESS_SUITE = "business_suite",
 }

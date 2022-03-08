@@ -37,7 +37,7 @@ const InputField = ({
     >
       <label
         htmlFor={name}
-        className={className ? "flex" : "text-xl md:text-3xl pb-2"}
+        className={className ? "flex" : "text-xl md:text-3xl pb-2 text-white"}
       >
         {label}
       </label>
