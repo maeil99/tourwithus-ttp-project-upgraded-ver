@@ -182,7 +182,7 @@ const FlightList = () => {
                 <Button>Finish</Button>
               </div>
               {getFlightId === undefined && (
-                <p className="flex justify-end pr-[105px] py-1 text-gray-500">
+                <p className="flex justify-end pr-[120px] py-1 text-gray-500">
                   No Flight selected
                 </p>
               )}

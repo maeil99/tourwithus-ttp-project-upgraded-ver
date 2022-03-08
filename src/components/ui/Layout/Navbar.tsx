@@ -13,14 +13,14 @@ const Navbar = () => {
         <ul className="flex justify-between">
           <li>
             <Link to={"/"}>
-              <h1 className="pt-[37px] pb-9 pl-[100px] text-white font-normal text-5xl">
+              <h1 className="pt-[37px] pl-12 pb-9 md:pl-[100px] text-white font-normal text-3xl md:text-5xl">
                 TourWithUs
               </h1>
             </Link>
           </li>
 
           {!user ? (
-            <div className="flex pr-[100px] space-x-6 items-center">
+            <div className="flex pr-[100px] space-x-3  md:space-x-6 items-center">
               <li>
                 <Link to={"/login"}>
                   <Button>Login</Button>

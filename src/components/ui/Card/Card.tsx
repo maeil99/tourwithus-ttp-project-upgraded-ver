@@ -33,7 +33,7 @@ const Card = ({
   const [toggleCard, setToggleCard] = useState(false);
   return (
     <div
-      className={`${className} border border-gray-200 rounded-xl divide-y divide-solid px-6`}
+      className={`${className} bg-white border border-gray-400 rounded-xl divide-y divide-solid px-6 shadow-md`}
     >
       <div className="flex justify-between mb-4 pt-6">
         <div onChange={onChange} className="flex items-center space-x-2">
