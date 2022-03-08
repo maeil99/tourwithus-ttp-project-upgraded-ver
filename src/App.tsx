@@ -24,7 +24,10 @@ function App() {
           <Layout>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path={"/profile/:uid"} element={user && <Profile />} />
+              <Route
+                path={"/profile/:uid"}
+                element={user ? <Profile /> : <Navigate to={"/"} />}
+              />
               <Route
                 path={"/signup"}
                 element={!user ? <Signup /> : <Navigate to={"/"} />}
