@@ -5,6 +5,7 @@ import Card from "../../components/ui/Card/Card";
 import Container from "../../components/ui/Container";
 import { useCollection } from "../../shared/hooks/firebaseHooks/useCollection";
 import { IFlightProps } from "../../shared/interface/flight.interface";
+import { originLocationFormat, convertTime } from "./flight.helper";
 
 const FlightList = () => {
   //get all params in the url
@@ -16,6 +17,8 @@ const FlightList = () => {
   const departDate = searchParams.get("departDate");
   const returnDate = searchParams.get("returnDate");
   const flightClass = searchParams.get("flightClass");
+
+  const cabinClass = flightClass ? flightClass.replace(/[ _\\/]/g, " ") : "";
 
   console.log(query, accomId, from, to, departDate, returnDate, flightClass);
   //get id for accom to pass in params
@@ -42,22 +45,35 @@ const FlightList = () => {
     if (documents !== undefined && documents !== null) {
       setFlightList(documents);
       const filteredFlightList = flightList?.filter(
-        (filter) => filter.boardingClass === flightClass
+        (filter) => filter.boardingClass === cabinClass
       );
 
       setFilteredFlightList(filteredFlightList);
     }
-  }, [documents, flightClass, flightList]);
+  }, [documents, flightClass, flightList, cabinClass]);
 
   //navigate page to external website
   const navigateToPage = (pageLink: string) => {
     window.location.href = pageLink;
   };
-  console.log(filteredFlightList);
+
   return (
     <Container className="xl:px-0">
       <h1 className="flex font-semibold text-xl pb-4">List of Flight</h1>
       {error && <p>{error}</p>}
+      <div className="w-48 py-3 flex">
+        <Button
+          onClick={() => {
+            if (query) {
+              navigate(`/flight?get_started=true&accom_id=${accomId}`);
+            } else {
+              navigate(`/flight`);
+            }
+          }}
+        >
+          Back to search
+        </Button>
+      </div>
       {filteredFlightList && filteredFlightList.length === 0 ? (
         <div>No data found</div>
       ) : (
@@ -203,25 +219,3 @@ const FlightList = () => {
 };
 
 export default FlightList;
-
-const originLocationFormat = (origin: string) => {
-  switch (origin) {
-    case "bangkok_thailand":
-      return "Bangkok, Thailand";
-    case "yangon_myanmar":
-      return "Yangon, Myanmar";
-    default:
-      break;
-  }
-};
-
-const convertTime = (time: Date) => {
-  let timestamp = new Date(Number(time) * 1000);
-  var formattedTime = timestamp.toLocaleString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  });
-
-  return formattedTime;
-};

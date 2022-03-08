@@ -22,10 +22,12 @@ export interface IAttractionProps {
   type: AttracType;
   //rating from provider , scale is 1 to 5
   rating?: number;
+  accomLocation:string;
+  link: string;
 }
 
-enum AttracType {
-  ENTERTAINMENT_PARKS = "entertainment parks",
+export enum AttracType {
+  ENTERTAINMENT_PARKS = "entertainment_parks",
   WILDLIFE = "wildlife",
   MUSEUM = "museum",
   HISTORICAL = "historical",

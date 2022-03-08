@@ -28,7 +28,7 @@ const Login = () => {
   return (
     <>
       <h1 className="text-center font-bold uppercase py-4">
-        Registration Form
+        Login Form
       </h1>
       <div className="flex justify-center pb-24">
         <Formik
