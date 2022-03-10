@@ -7,6 +7,7 @@ import Accommodation from "./pages/accomodation/Accommodation";
 import { AccommodationList } from "./pages/accomodation/AccommodationList";
 import Attraction from "./pages/attraction/Attraction";
 import AttractionList from "./pages/attraction/AttractionList";
+import Cab from "./pages/cab/Cab";
 import Flight from "./pages/flight/Flight";
 import FlightList from "./pages/flight/FlightList";
 import Home from "./pages/home/Home";
@@ -48,6 +49,8 @@ function App() {
               {/* --attraction page-- */}
               <Route path={"/attraction"} element={<Attraction />} />
               <Route path={"/attraction/:place"} element={<AttractionList />} />
+              {/* --cab page-- */}
+              <Route path={"/cab/:attractLocation"} element={<Cab />} />
               {/* 404 pages */}
               <Route path={"*"} element={<NotFoundPage />} />
             </Routes>
