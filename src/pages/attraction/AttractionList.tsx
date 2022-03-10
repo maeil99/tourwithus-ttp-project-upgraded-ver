@@ -32,6 +32,9 @@ const AttractionList = () => {
   //get attractionList
   const [attractList, setAttractList] = useState<IAttractionProps[]>();
 
+  //get attraction type
+  const [attractType, setAttractType] = useState<string>();
+
   //filter attraction list based on attractType
   const [filteredAttractList, setFilteredAttractList] =
     useState<IAttractionProps[]>();
@@ -41,9 +44,9 @@ const AttractionList = () => {
 
   const navigate = useNavigate();
   //navigate page to external website
-  const navigateToPage = (pageLink: string) => {
-    window.location.href = pageLink;
-  };
+  // const navigateToPage = (pageLink: string) => {
+  //   window.location.href = pageLink;
+  // };
 
   //call api
   const { documents, error } = useCollection("attraction", [
@@ -51,7 +54,9 @@ const AttractionList = () => {
     "==",
     `${destination}`,
   ]);
-  console.log(documents || 0);
+
+  //get attraction location
+  const [attractLocation, setAttractLocation] = useState<string>();
 
   useEffect(() => {
     if (documents !== undefined && documents !== null) {
@@ -105,14 +110,18 @@ const AttractionList = () => {
                 radioId={attraction.id}
                 key={attraction.id}
                 cardType="attraction"
-                onClick={() => navigateToPage(attraction.link)}
+                // onClick={() => navigateToPage(attraction.link)}
                 price={
                   attraction.pricePerTicket !== undefined &&
                   attraction.pricePerTicket !== "free"
                     ? attraction.pricePerTicket
                     : 0
                 }
-                onChange={(e) => setGetAttractId(e.target.value)}
+                onChange={(e) => {
+                  setGetAttractId(e.target.value);
+                  setAttractLocation(attraction.attractionName);
+                  setAttractType(attraction.type);
+                }}
               >
                 <div className="py-2 grid grid-cols-2">
                   <div className="flex justify-center">
@@ -160,7 +169,7 @@ const AttractionList = () => {
                         : "No souvenir shops included"}
                     </p>
                     <p className="py-2 md:pl-72">
-                      Provider: {attraction.AttractProvider}
+                      Provider: {attraction.AttractProvider || "No Provider"}
                     </p>
                   </div>
                 </div>
@@ -176,7 +185,15 @@ const AttractionList = () => {
                   <Button
                     onClick={() =>
                       navigate(
-                        `/cab?get_started=true&accom_id=${accomId}&flight_id=${flightId}&attract_id=${getAttractId}`
+                        `/cab/${
+                          attractLocation
+                            ? attractLocation.replace(/[ " "\\/]/g, "_")
+                            : ""
+                        }?get_started=true&accom_id=${accomId}&flight_id=${flightId}&attract_id=${getAttractId}&attracType=${
+                          attractType
+                            ? attractType.replace(/[ " "\\/]/g, "_")
+                            : ""
+                        }`
                       )
                     }
                     disabled={getAttractId ? false : true}

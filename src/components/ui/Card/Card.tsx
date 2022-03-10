@@ -57,7 +57,7 @@ const Card = ({
         </div>
 
         <div className="flex items-center space-x-2">
-          {price && (
+          {price !== 0 ? (
             <h2>{`RM${price} per ${
               cardType === "accommodation"
                 ? "night"
@@ -67,6 +67,8 @@ const Card = ({
                 ? "ticket"
                 : "trip"
             }`}</h2>
+          ):(
+            <h2>Free of charge</h2>
           )}
           {onClick && (
             <button

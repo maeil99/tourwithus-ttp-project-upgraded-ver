@@ -160,9 +160,10 @@ export const AccommodationList = () => {
                           : "grid-cols-2"
                       }`}
                     >
-                      {accom.amenities?.map((amen, index) => (
-                        <p key={index}>{amen}</p>
-                      ))}
+                      {accom.amenities &&
+                        accom.amenities.map((amen, index) => (
+                          <p key={index}>{amen}</p>
+                        ))}
                     </div>
                   </div>
                 </div>
@@ -172,6 +173,7 @@ export const AccommodationList = () => {
                 <div>{accom.roomType}</div>
               </div>
             </Card>
+            
           ))}
         {error && <p className="text-red-500">{error}</p>}
         {query === "true" &&
