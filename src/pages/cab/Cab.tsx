@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Button from "../../components/ui/Button/Button";
 import Card from "../../components/ui/Card/Card";
 import Container from "../../components/ui/Container";
+import { AuthContext } from "../../context/AuthContext";
 import { useCollection } from "../../shared/hooks/firebaseHooks/useCollection";
 import { IAccommodationProps } from "../../shared/interface/accommodation.interface";
 import { ICabsProps } from "../../shared/interface/cabs.interface";
 import { convertAttractionName } from "./cab.helper";
 
 const Cab = () => {
+  //get user (if logged in)
+  const { user } = useContext<string | any>(AuthContext);
   const { attractLocation } = useParams();
   const [searchParams] = useSearchParams();
   const query = searchParams.get("get_started");
@@ -62,6 +65,14 @@ const Cab = () => {
     <Container>
       {cabFilter && (
         <div>
+          {user && (
+            <div className="flex justify-center border-2 border-blue-300 my-5">
+              <p className="text-xl py-3">
+                Use gift code <strong>TWCAB</strong> to get 10% of at the
+                checkout
+              </p>
+            </div>
+          )}
           {cabFilter.map((cabRental) => (
             <Card
               get_started={true}
