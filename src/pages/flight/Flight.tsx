@@ -6,7 +6,11 @@ import SelectDate from "../../components/forms/SelectDate";
 import SelectField from "../../components/forms/SelectField";
 import Button, { Type } from "../../components/ui/Button/Button";
 import { useState } from "react";
-import { formatDate } from "./flight.helper";
+import {
+  formatDate,
+  OriginLocation,
+  OriginLocationFullName,
+} from "./flight.helper";
 
 interface IFlightInitialValuesProps {
   from: string;
@@ -76,10 +80,54 @@ const Flight = () => {
   const originLocation = [
     { key: "Where is your origin location", value: "" },
     {
-      key: "Bangkok, Thailand",
-      value: "bangkok_thailand",
+      key: OriginLocationFullName.BANKGKOK,
+      value: OriginLocation.BANKGKOK,
     },
-    { key: "Yangon, Myanmar", value: "yangon_myanmar" },
+    { key: OriginLocationFullName.YANGON, value: OriginLocation.YANGON },
+    {
+      key: OriginLocationFullName.CHANGI,
+      value: OriginLocation.CHANGI,
+    },
+    {
+      key: OriginLocationFullName.BRUNEI,
+      value: OriginLocation.BRUNEI,
+    },
+    {
+      key: OriginLocationFullName.JAKARTA,
+      value: OriginLocation.JAKARTA,
+    },
+    {
+      key: OriginLocationFullName.CAMBODIA,
+      value: OriginLocation.CAMBODIA,
+    },
+    {
+      key: OriginLocationFullName.VIETNAM,
+      value: OriginLocation.VIETNAM,
+    },
+    {
+      key: OriginLocationFullName.KUALA_TERENGGANU,
+      value: OriginLocation.KUALA_TERENGGANU,
+    },
+    {
+      key: OriginLocationFullName.KOTA_KINABALU,
+      value: OriginLocation.KOTA_KINABALU,
+    },
+    { key: OriginLocationFullName.KUCHING, value: OriginLocation.KUCHING },
+    {
+      key: OriginLocationFullName.KEDAH,
+      value: OriginLocation.KEDAH,
+    },
+    {
+      key: OriginLocationFullName.IPOH,
+      value: OriginLocation.IPOH,
+    },
+    { key: OriginLocationFullName.KUANTAN, value: OriginLocation.KUANTAN },
+    { key: OriginLocationFullName.PENANG, value: OriginLocation.PENANG },
+    { key: OriginLocationFullName.PENGKALAN, value: OriginLocation.PENGKALAN },
+    {
+      key: OriginLocationFullName.JOHOR,
+      value: OriginLocation.JOHOR,
+    },
   ];
 
   const destinationLocation = [

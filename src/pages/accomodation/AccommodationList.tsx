@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import CalendarIcon from "../../assets/icons/CalendarIcon";
 import ClockIcon from "../../assets/icons/ClockIcon";
@@ -12,6 +12,7 @@ import { ICovidCasesMalaysia } from "../../shared/interface/covid.interface";
 import standardSingleRoom from "../../assets/standard single room.jpg";
 import DeluxeDoubleRoom from "../../assets/deluxe double room.jpg";
 import { AuthContext } from "../../context/AuthContext";
+import Pagination from "../../components/ui/Pagination";
 
 export const AccommodationList = () => {
   //get user (if logged in)
@@ -25,7 +26,6 @@ export const AccommodationList = () => {
 
   //get id for accom to pass in params
   const [getAccomId, setGetAccomId] = useState<string>();
-  console.log(getAccomId);
   //call global covid API
   const malaysiaCovidURL =
     "https://disease.sh/v3/covid-19/countries/Malaysia?yesterday=true&strict=true";
@@ -66,6 +66,19 @@ export const AccommodationList = () => {
       setFilteredAccomList(filteredAccom);
     }
   }, [documents, accomList, peopleQuery]);
+
+  //pagination
+  let PageSize = 5;
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return (
+      filteredAccomList &&
+      filteredAccomList.slice(firstPageIndex, lastPageIndex)
+    );
+  }, [currentPage, PageSize, filteredAccomList]);
 
   return (
     <Container>
@@ -115,66 +128,87 @@ export const AccommodationList = () => {
             </p>
           </div>
         )}
-        {filteredAccomList &&
-          filteredAccomList.map((accom) => (
-            <Card
-              get_started={query ? true : false}
-              key={accom.id}
-              radioId={accom.id}
-              name="accomRadioId"
-              onChange={(e) => setGetAccomId(e.target.value)}
-              header={accom.accomName}
-              cardType="accommodation"
-              onClick={() => navigateToPage(`${accom.link}`)}
-              price={accom.pricePerNight}
-            >
-              <div className="grid grid-cols-2 py-2">
-                <div className="flex justify-center py-1 ">
-                  <img
-                    src={
-                      accom.accomName === "OYO 774 Hotel Iskandar" &&
-                      accom.roomType === "standard single room"
-                        ? standardSingleRoom
-                        : accom.accomName === "OYO 774 Hotel Iskandar" &&
-                          accom.roomType === "deluxe double room"
-                        ? DeluxeDoubleRoom
-                        : ""
-                    }
-                    alt="gambar hotel"
-                    className="w-56 h-56"
-                  />
-                </div>
-                <div className="flex flex-col  px-1">
-                  <div>
-                    <h3>Location: </h3>
-                    <p>{accom.address}</p>
-                  </div>
+        <table>
+          <thead></thead>
+          <tbody>
+            {currentTableData &&
+              currentTableData.map((accom) => (
+                <div className="py-2">
+                  <Card
+                    get_started={query ? true : false}
+                    key={accom.id}
+                    radioId={accom.id}
+                    name="accomRadioId"
+                    onChange={(e) => setGetAccomId(e.target.value)}
+                    header={accom.accomName}
+                    cardType="accommodation"
+                    onClick={() => navigateToPage(`${accom.link}`)}
+                    price={accom.pricePerNight}
+                  >
+                    <div className="grid grid-cols-2 py-2">
+                      <div className="flex justify-center py-1 ">
+                        <img
+                          src={
+                            accom.accomName === "OYO 774 Hotel Iskandar" &&
+                            accom.roomType === "standard single room"
+                              ? standardSingleRoom
+                              : accom.accomName === "OYO 774 Hotel Iskandar" &&
+                                accom.roomType === "deluxe double room"
+                              ? DeluxeDoubleRoom
+                              : ""
+                          }
+                          alt={accom.accomName}
+                          className="w-56 h-56"
+                        />
+                      </div>
+                      <div className="flex flex-col  px-1">
+                        <div>
+                          <h3>Location: </h3>
+                          <p>{accom.address}</p>
+                        </div>
 
-                  <div className="grid py-1 ">
-                    <p className="text-lg font-bold  ">Amenities</p>
+                        <div className="grid py-1 ">
+                          <p className="text-lg font-bold  ">Amenities</p>
 
-                    <div
-                      className={`grid ${
-                        accom.amenities && accom.amenities.length > 6
-                          ? "grid-cols-3"
-                          : "grid-cols-2"
-                      }`}
-                    >
-                      {accom.amenities &&
-                        accom.amenities.map((amen, index) => (
-                          <p key={index}>{amen}</p>
-                        ))}
+                          <div
+                            className={`grid ${
+                              accom.amenities && accom.amenities.length > 6
+                                ? "grid-cols-3"
+                                : "grid-cols-2"
+                            }`}
+                          >
+                            {accom.amenities &&
+                              accom.amenities.map((amen, index) => (
+                                <p key={index}>{amen}</p>
+                              ))}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                    <div className="grid grid-cols-3">
+                      <div>
+                        <p>Person per room: {accom.peoplePerRoom}</p>
+                      </div>
+                      <div>
+                        <p>Room type: {accom.roomType}</p>
+                      </div>
+                      <div>
+                        <p>Accommodation type: {accom.type}</p>
+                      </div>
+                    </div>
+                  </Card>
                 </div>
-              </div>
-              <div className="grid grid-cols-3">
-                <div>{accom.peoplePerRoom}</div>
-                <div>{accom.roomType}</div>
-              </div>
-            </Card>
-            
-          ))}
+              ))}
+          </tbody>
+        </table>
+        <Pagination
+          currentPage={currentPage}
+          totalCount={filteredAccomList ? filteredAccomList.length : 0}
+          pageSize={PageSize}
+          onPageChange={(page: any) =>
+            setCurrentPage(typeof page === "number" ? page : 0)
+          }
+        />
         {error && <p className="text-red-500">{error}</p>}
         {query === "true" &&
         filteredAccomList &&
@@ -192,7 +226,16 @@ export const AccommodationList = () => {
                 </Button>
               </div>
 
-              <Button>Finish</Button>
+              <Button
+                onClick={() =>
+                  navigate(
+                    `/estimation-cost?get_started=true&accom_id=${getAccomId}`
+                  )
+                }
+                disabled={getAccomId ? false : true}
+              >
+                Finish
+              </Button>
             </div>
             {getAccomId === undefined && (
               <p className="flex justify-end pr-[105px] py-1 text-gray-500">
