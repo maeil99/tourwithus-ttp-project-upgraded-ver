@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/ui/Button/Button";
 import Card from "../../components/ui/Card/Card";
 import Container from "../../components/ui/Container";
+import Pagination from "../../components/ui/Pagination";
 import { AuthContext } from "../../context/AuthContext";
 import { useCollection } from "../../shared/hooks/firebaseHooks/useCollection";
 import { IFlightProps } from "../../shared/interface/flight.interface";
@@ -60,6 +61,19 @@ const FlightList = () => {
     window.location.href = pageLink;
   };
 
+  //pagination
+  let PageSize = 5;
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return (
+      filteredFlightList &&
+      filteredFlightList.slice(firstPageIndex, lastPageIndex)
+    );
+  }, [currentPage, PageSize, filteredFlightList]);
+
   return (
     <Container className="xl:px-0">
       <h1 className="flex font-semibold text-xl pb-4">List of Flight</h1>
@@ -84,109 +98,121 @@ const FlightList = () => {
           </p>
         </div>
       )}
-      {filteredFlightList && filteredFlightList.length === 0 ? (
+      {currentTableData && currentTableData.length === 0 ? (
         <div className="py-2">No data found</div>
       ) : (
         <div className=" flex flex-col space-y-4 py-2">
-          {filteredFlightList?.map((flight) => {
-            return (
-              <Card
-                get_started={query ? true : false}
-                flightCompanyOne={flight.flightCompanyOneDeparture || "NA"}
-                flightCompanyTwo={
-                  flight.flightType === "two-way"
-                    ? flight.flightCompanyOneReturn
-                    : "Not Available"
-                }
-                name="flightRadioId"
-                radioId={flight.id}
-                key={flight.id}
-                cardType="flight"
-                onClick={() => navigateToPage(flight.link)}
-                price={
-                  flight.flightType === "one-way"
-                    ? flight.pricePerOneWayTicket
-                    : flight.priceForTwoWayTicket
-                }
-                onChange={(e) => setGetFlightId(e.target.value)}
-              >
-                <div className="grid grid-cols-3 py-2 pl-8">
-                  <p className="flex justify-start">
-                    Origin Location: {flight.originDepartureLocation}
-                  </p>
-                  <p className="flex justify-center">
-                    Destination Location:{" "}
-                    {flight.flightDestinationLocation || "NA"}
-                  </p>
-                  <p className="flex justify-end">
-                    Flight Duration:{" "}
-                    {`${Math.floor(flight.flightDuration / 60)} hours ${
-                      flight.flightDuration % 60
-                    } minutes`}
-                  </p>
-                </div>
-                <div className="grid grid-cols-3 py-2">
-                  <p className="flex justify-start pl-8">
-                    Flight Type:{" "}
-                    {flight.flightType === "one-way" ? "One way" : "Two way"}
-                  </p>
-                  <p className="flex justify-center">
-                    {flight.transit === true
-                      ? flight.numberOfTransit + " transit"
-                      : "No Transit"}
-                  </p>
-                  <p className="flex justify-end pr-16">
-                    Flight Provider: {flight.flightProvider}
-                  </p>
-                </div>
-                <div>
-                  <p>Flight from {flight.originDepartureLocation}</p>
-                  <div className="grid grid-cols-2 py-2">
-                    <p className="flex justify-start pl-8">
-                      Departure time:{" "}
-                      {convertTime(flight.departureTimeFromOrigin)}
-                    </p>
-                    <p className="flex justify-end pr-24">
-                      Arrival time: {convertTime(flight.arrivalTimeFromOrigin)}
-                    </p>
-                  </div>
-                </div>
-                {flight.flightType !== "one-way" && (
-                  <div>
-                    <p>Return Flight from {flight.flightDestinationLocation}</p>
-                    <div className="grid grid-cols-2 py-2">
-                      <p className="flex justify-start pl-8">
-                        Departure time:{" "}
-                        {flight.departureTimeFromDestination &&
-                          convertTime(flight.departureTimeFromDestination)}
-                      </p>
-                      <p className="flex justify-end pr-24">
-                        Arrival time:{" "}
-                        {flight.arrivalTimeFromDestination &&
-                          convertTime(flight.arrivalTimeFromDestination)}
-                      </p>
+          <table>
+            <thead></thead>
+            <tbody>
+              {currentTableData &&
+                currentTableData.map((flight) => {
+                  return (
+                    <div className="py-2">
+                      <Card
+                        get_started={query ? true : false}
+                        flightCompanyOne={
+                          flight.flightCompanyOneDeparture || "NA"
+                        }
+                        flightCompanyTwo={
+                          flight.flightType === "two-way"
+                            ? flight.flightCompanyOneReturn
+                            : "Not Available"
+                        }
+                        name="flightRadioId"
+                        radioId={flight.id}
+                        key={flight.id}
+                        cardType="flight"
+                        onClick={() => navigateToPage(flight.link)}
+                        price={
+                          flight.flightType === "one-way"
+                            ? flight.pricePerOneWayTicket
+                            : flight.priceForTwoWayTicket
+                        }
+                        onChange={(e) => setGetFlightId(e.target.value)}
+                      >
+                        <div className="grid grid-cols-3 py-2 pl-8">
+                          <p className="flex justify-start">
+                            Origin Location: {flight.originDepartureLocation}
+                          </p>
+                          <p className="flex justify-center">
+                            Destination Location:{" "}
+                            {flight.flightDestinationLocation || "NA"}
+                          </p>
+                          <p className="flex justify-end">
+                            Flight Duration:{" "}
+                            {`${Math.floor(flight.flightDuration / 60)} hours ${
+                              flight.flightDuration % 60
+                            } minutes`}
+                          </p>
+                        </div>
+                        <div className="grid grid-cols-3 py-2">
+                          <p className="flex justify-start pl-8">
+                            Flight Type:{" "}
+                            {flight.flightType === "one-way"
+                              ? "One way"
+                              : "Two way"}
+                          </p>
+                          <p className="flex justify-center">
+                            {flight.transit === true
+                              ? flight.numberOfTransit + " transit"
+                              : "No Transit"}
+                          </p>
+                          <p className="flex justify-end pr-16">
+                            Flight Provider: {flight.flightProvider}
+                          </p>
+                        </div>
+                        <div>
+                          <p>Flight from {flight.originDepartureLocation}</p>
+                          <div className="grid grid-cols-2 py-2">
+                            <p className="flex justify-start pl-8">
+                              Departure time:{" "}
+                              {convertTime(flight.departureTimeFromOrigin)}
+                            </p>
+                            <p className="flex justify-end pr-24">
+                              Arrival time:{" "}
+                              {convertTime(flight.arrivalTimeFromOrigin)}
+                            </p>
+                          </div>
+                        </div>
+                        {flight.flightType !== "one-way" && (
+                          <div>
+                            <p>
+                              Return Flight from{" "}
+                              {flight.flightDestinationLocation}
+                            </p>
+                            <div className="grid grid-cols-2 py-2">
+                              <p className="flex justify-start pl-8">
+                                Departure time:{" "}
+                                {flight.departureTimeFromDestination &&
+                                  convertTime(
+                                    flight.departureTimeFromDestination
+                                  )}
+                              </p>
+                              <p className="flex justify-end pr-24">
+                                Arrival time:{" "}
+                                {flight.arrivalTimeFromDestination &&
+                                  convertTime(
+                                    flight.arrivalTimeFromDestination
+                                  )}
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </Card>
                     </div>
-                  </div>
-                )}
-
-                {/* {flight.numberOfTransit && flight.numberOfTransit > 0 && (
-                  <div className="grid grid-cols-2 py-2">
-                    <p className="flex justify-center">
-                      Flight Type: {flight.flightType}
-                    </p>
-                    <p className="flex justify-center">
-                      {flight.transit === true
-                        ? flight.numberOfTransit + " transit"
-                        : "No Transit"}
-                    </p>
-                    <p className="flex justify-center">
-                      Flight Provider: {flight.flightProvider}
-                    </p>
-                  </div>
-                )} */}
-              </Card>
-            );
-          })}
+                  );
+                })}
+            </tbody>
+          </table>
+          <Pagination
+            currentPage={currentPage}
+            totalCount={filteredFlightList ? filteredFlightList.length : 0}
+            pageSize={PageSize}
+            onPageChange={(page: any) =>
+              setCurrentPage(typeof page === "number" ? page : 0)
+            }
+          />
           {query === "true" &&
           filteredFlightList &&
           filteredFlightList.length > 0 ? (
@@ -205,7 +231,16 @@ const FlightList = () => {
                   </Button>
                 </div>
 
-                <Button>Finish</Button>
+                <Button
+                  onClick={() =>
+                    navigate(
+                      `/estimation-cost?get_started=true&accom_id=${accomId}&flight_id=${getFlightId}`
+                    )
+                  }
+                  disabled={getFlightId ? false : true}
+                >
+                  Finish
+                </Button>
               </div>
               {getFlightId === undefined && (
                 <p className="flex justify-end pr-[120px] py-1 text-gray-500">

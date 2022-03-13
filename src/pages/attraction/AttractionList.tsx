@@ -1,15 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Button from "../../components/ui/Button/Button";
 import Card from "../../components/ui/Card/Card";
 import Container from "../../components/ui/Container";
+import Pagination from "../../components/ui/Pagination";
 import { AuthContext } from "../../context/AuthContext";
 import capitalizeFirstLetter from "../../shared/helper/capitalizeFirstLetter";
 import { useCollection } from "../../shared/hooks/firebaseHooks/useCollection";
 import { IAttractionProps } from "../../shared/interface/attraction.interface";
-import LostWorld from "../../assets/pic/attraction/lost_world_of_tambun.jpg";
-import HighRope from "../../assets/pic/attraction/high_rope.jpg";
-import FuntasyHouse from "../../assets/pic/attraction/funtasy_house.jpeg";
+import { attractPic } from "./attraction.helper";
 
 const AttractionList = () => {
   //get user (if logged in)
@@ -69,7 +68,18 @@ const AttractionList = () => {
     }
   }, [documents, attracType, attractList]);
 
-  console.log(filteredAttractList);
+  //pagination
+  let PageSize = 5;
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const currentAttractionTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return (
+      filteredAttractList &&
+      filteredAttractList.slice(firstPageIndex, lastPageIndex)
+    );
+  }, [currentPage, PageSize, filteredAttractList]);
 
   return (
     <Container className="xl:px-0">
@@ -101,81 +111,103 @@ const AttractionList = () => {
         <div className="py-2">No data found</div>
       ) : (
         <div className=" flex flex-col space-y-4 py-2">
-          {filteredAttractList?.map((attraction) => {
-            return (
-              <Card
-                get_started={query ? true : false}
-                header={capitalizeFirstLetter(attraction.attractionName)}
-                name="attractionRadioId"
-                radioId={attraction.id}
-                key={attraction.id}
-                cardType="attraction"
-                // onClick={() => navigateToPage(attraction.link)}
-                price={
-                  attraction.pricePerTicket !== undefined &&
-                  attraction.pricePerTicket !== "free"
-                    ? attraction.pricePerTicket
-                    : 0
-                }
-                onChange={(e) => {
-                  setGetAttractId(e.target.value);
-                  setAttractLocation(attraction.attractionName);
-                  setAttractType(attraction.type);
-                }}
-              >
-                <div className="py-2 grid grid-cols-2">
-                  <div className="flex justify-center">
-                    <img
-                      src={attractPic(attraction.attractionName)}
-                      alt="gambar hotel"
-                      className="w-56 h-56"
-                    />
-                    <div className="flex flex-col space-y-3 items-center py-8">
-                      <p>Location: {attraction.attractionAddr}</p>
-                      <p>
-                        Person In Charge Contact No. : +60
-                        {attraction.AttractPhoneNo}
-                      </p>
-                      <div className="flex justify-between px-8 space-x-4">
-                        <p>
-                          Opening Hours:{" "}
-                          {attraction.openingHours < 1000
-                            ? "0" + attraction.openingHours
-                            : attraction.openingHours}
-                        </p>
-                        <p>
-                          Closing Hours:{" "}
-                          {attraction.closingHours < 1000
-                            ? "0" + attraction.closingHours
-                            : attraction.closingHours}
-                        </p>
-                      </div>
+          <table>
+            <thead></thead>
+            <tbody>
+              {currentAttractionTableData &&
+                currentAttractionTableData.map((attraction) => {
+                  return (
+                    <div className="py-2">
+                      <Card
+                        get_started={query ? true : false}
+                        header={capitalizeFirstLetter(
+                          attraction.attractionName
+                        )}
+                        name="attractionRadioId"
+                        radioId={attraction.id}
+                        key={attraction.id}
+                        cardType="attraction"
+                        // onClick={() => navigateToPage(attraction.link)}
+                        price={
+                          attraction.pricePerTicket !== undefined &&
+                          attraction.pricePerTicket !== "free"
+                            ? attraction.pricePerTicket
+                            : 0
+                        }
+                        onChange={(e) => {
+                          setGetAttractId(e.target.value);
+                          setAttractLocation(attraction.attractionName);
+                          setAttractType(attraction.type);
+                        }}
+                      >
+                        <div className="py-2 grid grid-cols-2">
+                          <div className="flex justify-center">
+                            <img
+                              src={attractPic(attraction.attractionName)}
+                              alt={attraction.attractionName}
+                              className="w-56 h-56"
+                            />
+                            <div className="flex flex-col space-y-3 items-center py-8">
+                              <p>Location: {attraction.attractionAddr}</p>
+                              <p>
+                                {attraction.AttractPhoneNo
+                                  ? `Person In Charge Contact No. : +60-${attraction.AttractPhoneNo}`
+                                  : ""}
+                              </p>
+                              <div className="flex justify-between px-8 space-x-4">
+                                <p>
+                                  Opening Hours:{" "}
+                                  {attraction.openingHours < 1000
+                                    ? "0" + attraction.openingHours
+                                    : attraction.openingHours}
+                                </p>
+                                <p>
+                                  Closing Hours:{" "}
+                                  {attraction.closingHours < 1000
+                                    ? "0" + attraction.closingHours
+                                    : attraction.closingHours}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          <div>
+                            <p className="flex justify-start md:justify-end md:pr-40">
+                              Available Attraction:
+                            </p>
+                            {attraction.attractionAvailable.map(
+                              (attract, index) => (
+                                <ul className="flex justify-start md:pl-[350px]">
+                                  <li key={index}>
+                                    {index + 1}) {attract}
+                                  </li>
+                                </ul>
+                              )
+                            )}
+                            <p className="py-2 md:pl-80">
+                              {attraction.souvenirShops === true
+                                ? "The attraction included souvenir shops"
+                                : "No souvenir shops included"}
+                            </p>
+                            <p className="py-2 md:pl-72">
+                              Provider:{" "}
+                              {attraction.AttractProvider || "No Provider"}
+                            </p>
+                          </div>
+                        </div>
+                      </Card>
                     </div>
-                  </div>
-                  <div>
-                    <p className="flex justify-start md:justify-end md:pr-40">
-                      Available Attraction:
-                    </p>
-                    {attraction.attractionAvailable.map((attract, index) => (
-                      <ul className="flex justify-start md:pl-[350px]">
-                        <li key={index}>
-                          {index + 1}) {attract}
-                        </li>
-                      </ul>
-                    ))}
-                    <p className="py-2 md:pl-80">
-                      {attraction.souvenirShops === true
-                        ? "The attraction included souvenir shops"
-                        : "No souvenir shops included"}
-                    </p>
-                    <p className="py-2 md:pl-72">
-                      Provider: {attraction.AttractProvider || "No Provider"}
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            );
-          })}
+                  );
+                })}
+            </tbody>
+          </table>
+          <Pagination
+            currentPage={currentPage}
+            totalCount={filteredAttractList ? filteredAttractList.length : 0}
+            pageSize={PageSize}
+            onPageChange={(page: any) =>
+              setCurrentPage(typeof page === "number" ? page : 0)
+            }
+          />
           {query === "true" &&
           filteredAttractList &&
           filteredAttractList.length > 0 ? (
@@ -202,7 +234,16 @@ const AttractionList = () => {
                   </Button>
                 </div>
 
-                <Button>Finish</Button>
+                <Button
+                  onClick={() =>
+                    navigate(
+                      `/estimation-cost?get_started=true&accom_id=${accomId}&flight_id=${flightId}&attract_id=${getAttractId}`
+                    )
+                  }
+                  disabled={getAttractId ? false : true}
+                >
+                  Finish
+                </Button>
               </div>
               {getAttractId === undefined && (
                 <p className="flex justify-end pr-[120px] py-1 text-gray-500">
@@ -226,16 +267,3 @@ const AttractionList = () => {
 };
 
 export default AttractionList;
-
-const attractPic = (loc: string) => {
-  switch (loc) {
-    case "lost world of tambun amusement and water park admission ticket":
-      return LostWorld;
-    case "high rope at mountain school":
-      return HighRope;
-    case "funtasy house trick art admission ticket":
-      return FuntasyHouse;
-    default:
-      break;
-  }
-};

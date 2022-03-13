@@ -1,6 +1,6 @@
 export enum AttractionName {
     HIGH_HOPE = "high_rope_at_mountain_school",
-    LOST_WORLD_OF_TAMBUN = "Lost_World_Of_Tambun,_Ipoh_Perak",
+    LOST_WORLD_OF_TAMBUN = "Lost_World_of_Tambun,_Ipoh_Perak",
     MURAL = "mural_art's_lane",
     HO_YAN = "ho_yan_hor_museum",
     WHITE_WATER = "White_Water_Rafting_on_the_Sungai_Kampar_River",
