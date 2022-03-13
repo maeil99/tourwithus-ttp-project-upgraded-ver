@@ -13,6 +13,7 @@ const Cab = () => {
   //get user (if logged in)
   const { user } = useContext<string | any>(AuthContext);
   const { attractLocation } = useParams();
+  console.log('attract Location: ', attractLocation)
   const [searchParams] = useSearchParams();
   const query = searchParams.get("get_started");
   const accomId = searchParams.get("accom_id");
@@ -20,7 +21,6 @@ const Cab = () => {
   const attractId = searchParams.get("attract_id");
   const attractName =
     attractLocation !== undefined && convertAttractionName(attractLocation);
-  console.log("HAI: ", attractName);
   const navigate = useNavigate();
 
   //call api for accommodation
@@ -41,7 +41,7 @@ const Cab = () => {
   //set list of cab in a new const
   const [cabList, setCabList] = useState<ICabsProps[]>();
   console.log("cab list: ", cabList);
-  const cabFilter = cabList?.filter(
+  const cabFilter = cabList && cabList.filter(
     (cab) => cab.originTrip === filteredAccomList?.accomName
   );
 
